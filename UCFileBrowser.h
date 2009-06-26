@@ -22,6 +22,8 @@
 - (NSString *)fileNameWithNameRange:(NSRange *)outRange;
 - (NSString *)fileNameFromURL:(NSURL *)fileURL withNameRange:(NSRange *)outRange;
 
+- (NSArray *)filterTypes;
+
 - (IBAction)gotoFirst:(id)sender;
 - (IBAction)gotoPrevious:(id)sender;
 - (IBAction)gotoNext:(id)sender;

@@ -64,11 +64,6 @@ NSString *const UCPBTypeFolderIndexSets = @"com.useless.chain.folder.indexset";
 	[op beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(chooseDidEnd:returnCode:contextInfo:) contextInfo:nil];
 }
 
-- (IBAction)removeFolder:(id)sender
-{
-	[self updateUserDefaults];
-}
-
 #pragma mark Data Source
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
@@ -86,6 +81,12 @@ NSString *const UCPBTypeFolderIndexSets = @"com.useless.chain.folder.indexset";
 		}
 	
 	return [[NSFileManager defaultManager] displayNameAtPath:[folders objectAtIndex:rowIndex]];
+}
+
+- (void)tableView:(NSTableView *)aTableView deleteRowsWithIndexes:(NSIndexSet *)rowIndexes
+{
+	[folders removeObjectsAtIndexes:[foldersTable selectedRowIndexes]];
+	[self updateUserDefaults];
 }
 
 - (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
@@ -126,9 +127,25 @@ NSString *const UCPBTypeFolderIndexSets = @"com.useless.chain.folder.indexset";
 	else if([bestType isEqualToString:NSFilenamesPboardType])
 		{
 		NSArray * files = [pb propertyListForType:bestType];
+		NSUInteger count = [files count];
+		NSMutableArray * goodFiles = [NSMutableArray arrayWithCapacity:count];
 		
-		rows = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(row, [files count])];
-		[folders insertObjects:files atIndexes:rows];
+		NSFileManager * fm = [NSFileManager defaultManager];
+		NSString * folder;
+		NSUInteger i;
+		BOOL isFolder;
+		for(i=0; i<count; i++)
+			{
+			folder = (NSString *)[files objectAtIndex:i];
+			if([fm fileExistsAtPath:folder isDirectory:&isFolder])
+				{
+				if(isFolder)
+					{ [goodFiles addObject:folder]; }
+				}
+			}
+		
+		rows = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(row, [goodFiles count])];
+		[folders insertObjects:goodFiles atIndexes:rows];
 		}
 	else
 		{
@@ -161,8 +178,9 @@ NSString *const UCPBTypeFolderIndexSets = @"com.useless.chain.folder.indexset";
 
 	if(returnCode==NSOKButton)
 		{
-		NSLog(@"Ordner: %@.", [panel filenames]);
-//		[self updateUserDefaults]
+		[folders addObjectsFromArray:[panel filenames]];
+		[foldersTable reloadData];
+		[self updateUserDefaults];
 		}
 }
 

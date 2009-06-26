@@ -22,6 +22,7 @@
 		BFD3E5350FE19FF000D3E561 /* Chain.icns in Resources */ = {isa = PBXBuildFile; fileRef = BFD3E5340FE19FF000D3E561 /* Chain.icns */; };
 		BFD3E5D40FE1BD5700D3E561 /* UCFileBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD3E5D30FE1BD5700D3E561 /* UCFileBrowser.m */; };
 		BFD3E6000FE1C0C200D3E561 /* UCFileList.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD3E5FF0FE1C0C200D3E561 /* UCFileList.m */; };
+		D00AA0AE0FE312CF0002685B /* UCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D00AA0AD0FE312CF0002685B /* UCTableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,8 @@
 		BFD3E5D30FE1BD5700D3E561 /* UCFileBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCFileBrowser.m; sourceTree = "<group>"; };
 		BFD3E5FE0FE1C0C200D3E561 /* UCFileList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCFileList.h; sourceTree = "<group>"; };
 		BFD3E5FF0FE1C0C200D3E561 /* UCFileList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCFileList.m; sourceTree = "<group>"; };
+		D00AA0AC0FE312CF0002685B /* UCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCTableView.h; sourceTree = "<group>"; };
+		D00AA0AD0FE312CF0002685B /* UCTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCTableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +110,7 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D00AA0B00FE3138E0002685B /* View Subclasses */,
 				BFD3E5FE0FE1C0C200D3E561 /* UCFileList.h */,
 				BFD3E5FF0FE1C0C200D3E561 /* UCFileList.m */,
 				BFD3E5D20FE1BD5700D3E561 /* UCFileBrowser.h */,
@@ -154,6 +158,15 @@
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D00AA0B00FE3138E0002685B /* View Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				D00AA0AC0FE312CF0002685B /* UCTableView.h */,
+				D00AA0AD0FE312CF0002685B /* UCTableView.m */,
+			);
+			name = "View Subclasses";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,6 +236,7 @@
 				BF31401B0FE13D100052C2AF /* UCInspector.m in Sources */,
 				BFD3E5D40FE1BD5700D3E561 /* UCFileBrowser.m in Sources */,
 				BFD3E6000FE1C0C200D3E561 /* UCFileList.m in Sources */,
+				D00AA0AE0FE312CF0002685B /* UCTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

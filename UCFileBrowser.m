@@ -33,6 +33,7 @@
 {
     [super windowControllerDidLoadNib:aController];
 //	Toolbar?!
+//	[self setFileURL:[NSURL fileURLWithPath:NSHomeDirectory()]];
 }
 
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
@@ -52,12 +53,26 @@
 		filePath = [filePath stringByDeletingLastPathComponent];
 		}
 
-	NSLog(@"Browse: %@.", filePath);
+	fileList = [[UCFileList alloc] initForFolder:filePath withTypes:[self filterTypes]];
+	NSLog(@"Browse: %@ (%d).", filePath, [fileList count]);
+	// aktuellen Index bestimmen
+	if(isFolder)
+		{
+		
+		}
+	else
+		{
+		}
 
 	return YES;
 }
 
 #pragma mark Document
+
+- (NSArray *)filterTypes
+{
+	return [NSArray arrayWithObject:(NSString *)kUTTypeData];
+}
 
 - (void)setCurrentFileURL:(NSURL *)fileURL
 {

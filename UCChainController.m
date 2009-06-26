@@ -60,6 +60,11 @@ NSString *const UCDefaultsChangedNotification = @"UCDefaultsChanged";
 
 #pragma mark -
 
+- (void)applicationWillTerminate:(NSNotification *)aNotification
+{
+	[[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)awakeFromNib
 {
 	[self rebuildFolderMenus];

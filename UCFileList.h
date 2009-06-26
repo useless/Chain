@@ -11,10 +11,12 @@
 
 @interface UCFileList : NSObject
 {
-
+	NSString * folder;
+	NSArray * filterTypes;
+	NSMutableArray * files;
 }
 
-//- (void)setFilterTypes:(NSArray *)types;
+- (id)initForFolder:(NSString *)aFolder withTypes:(NSArray *)theTypes;
 
 @property(readonly) NSUInteger count;
 

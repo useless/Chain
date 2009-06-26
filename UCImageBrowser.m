@@ -46,11 +46,11 @@
 {
 	NSLog(@"Speichern als %@.", typeName);
 	return [NSData data];
-    if(outError!=NULL)
-	{
-		*outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
-	}
-	return nil;
+}
+
+- (NSArray *)filterTypes
+{
+	return [NSArray arrayWithObject:(NSString *)kUTTypeImage];
 }
 
 #pragma mark Actions
