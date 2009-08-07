@@ -64,7 +64,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Chain</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.useless.${PRODUCT_NAME:identifier}</string>
+	<string>de.sigma-server.useless.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
