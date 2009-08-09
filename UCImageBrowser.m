@@ -57,13 +57,12 @@
 {
 	NSImage * image = [[NSImage alloc]  initWithContentsOfURL:[self fileURL]];
 	if(image && [[image representations] count])
-	{
+		{
 		NSImageRep * rep = [[image representations] objectAtIndex:0];
-		NSSize size = NSMakeSize([rep pixelsWide],[rep pixelsHigh]);
 		
 		[image setScalesWhenResized:YES];
-		[image setSize:size];
-	}
+		[image setSize:NSMakeSize([rep pixelsWide], [rep pixelsHigh])];
+		}
 	[pictureView setImage:[image autorelease]];
 }
 
@@ -71,6 +70,11 @@
 
 - (void)invertImage:(id)sender
 {
+}
+
+- (IBAction)toggleAnimation:(id)sender;
+{
+	[pictureView setAnimates:![pictureView animates]];
 }
 
 @end

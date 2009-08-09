@@ -79,6 +79,7 @@
 	[files release];
 	[folder release];
 	[filterTypes release];
+
 	[super dealloc];
 }
 
