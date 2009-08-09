@@ -39,7 +39,7 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController
 {
     [super windowControllerDidLoadNib:aController];
-//	[pictureView setImage:[[[NSImage alloc] initWithContentsOfURL:[self fileURL]] autorelease]];
+	[self currentFileDidChange];
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
@@ -51,6 +51,11 @@
 - (NSArray *)filterTypes
 {
 	return [NSArray arrayWithObject:(NSString *)kUTTypeImage];
+}
+
+- (void)currentFileDidChange
+{
+	[pictureView setImage:[[[NSImage alloc] initWithContentsOfURL:[self fileURL]] autorelease]];
 }
 
 #pragma mark Actions

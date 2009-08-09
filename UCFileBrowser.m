@@ -76,9 +76,14 @@
 	return [NSArray arrayWithObject:(NSString *)kUTTypeData];
 }
 
-- (void)setCurrentFileURL:(NSURL *)fileURL
+- (void)setCurrentFile:(NSString *)filePath
 {
-	[self setFileURL:fileURL];
+	[self setFileURL:[NSURL fileURLWithPath:filePath]];
+	[self currentFileDidChange];
+}
+
+- (void)currentFileDidChange
+{
 }
 
 - (NSString *)fileNameWithNameRange:(NSRange *)outRange
@@ -101,18 +106,44 @@
 
 - (IBAction)gotoFirst:(id)sender
 {
+	[fileList setCurrentIndex:0];
+	[self setCurrentFile:[fileList currentFile]];
 }
 
 - (IBAction)gotoPrevious:(id)sender
 {
+	NSUInteger prev = fileList.currentIndex-1;
+	if(prev==-1)
+		{
+		[fileList setCurrentIndex:fileList.count-1];
+		[self setCurrentFile:[fileList currentFile]];
+		}
+	else
+		{
+		[fileList setCurrentIndex:prev];
+		[self setCurrentFile:[fileList currentFile]];
+		}
 }
 
 - (IBAction)gotoNext:(id)sender
 {
+	NSUInteger next = fileList.currentIndex+1;
+	if(next==fileList.count)
+		{
+		[fileList setCurrentIndex:0];
+		[self setCurrentFile:[fileList currentFile]];
+		}
+	else
+		{
+		[fileList setCurrentIndex:next];
+		[self setCurrentFile:[fileList currentFile]];
+		}
 }
 
 - (IBAction)gotoLast:(id)sender
 {
+	[fileList setCurrentIndex:fileList.count-1];
+	[self setCurrentFile:[fileList currentFile]];
 }
 
 - (IBAction)gotoIndex:(id)sender
@@ -229,7 +260,11 @@
 {
 	if([anItem action]==@selector(gotoLast:))
 		{
-		return NO;
+		return fileList.currentIndex!=fileList.count-1;
+		}
+	else if([anItem action]==@selector(gotoFirst:))
+		{
+		return fileList.currentIndex!=0;
 		}
 	
 	return YES;

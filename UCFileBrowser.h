@@ -17,7 +17,8 @@
 	UCFileList * fileList;
 }
 
-- (void)setCurrentFileURL:(NSURL *)fileURL;
+- (void)setCurrentFile:(NSString *)filePath;
+- (void)currentFileDidChange;
 
 - (NSString *)fileNameWithNameRange:(NSRange *)outRange;
 - (NSString *)fileNameFromURL:(NSURL *)fileURL withNameRange:(NSRange *)outRange;
