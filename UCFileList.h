@@ -14,10 +14,15 @@
 	NSString * folder;
 	NSArray * filterTypes;
 	NSMutableArray * files;
+	NSUInteger currentIndex;
 }
 
-- (id)initForFolder:(NSString *)aFolder withTypes:(NSArray *)theTypes;
+- (id)initForPath:(NSString *)aFolder withTypes:(NSArray *)theTypes;
 
+- (NSString *)currentFile;
+
+@property NSUInteger currentIndex;
 @property(readonly) NSUInteger count;
+@property(readonly) NSString * folder;
 
 @end

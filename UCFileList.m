@@ -11,28 +11,44 @@
 
 @implementation UCFileList
 
-- (id)initForFolder:(NSString *)aFolder withTypes:(NSArray *)theTypes
+- (id)initForPath:(NSString *)aPath withTypes:(NSArray *)theTypes
 {
 	if(self=[self init])
 		{
-		folder = [aFolder retain];
+		BOOL isFolder;
+
+		if(![[NSFileManager defaultManager] fileExistsAtPath:aPath isDirectory:&isFolder])
+			{
+			[self release];
+			return nil;
+			}
+
+		if(isFolder)
+			{
+			folder = [aPath copy];
+			}
+		else
+			{
+			folder = [[aPath stringByDeletingLastPathComponent] retain];
+			}
+
 		filterTypes = [theTypes retain];
 		
-		BOOL isFolder;
 		NSWorkspace * ws = [NSWorkspace sharedWorkspace];
-		
 		NSArray * allFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folder error:NULL];
 
 		NSUInteger i,j;
 		NSUInteger typeCount=[filterTypes count];
 		NSUInteger fileCount=[allFiles count];
 		files = [[NSMutableArray alloc] initWithCapacity:fileCount];
-		NSString *file, *fileType, *testType;
+		currentIndex = NSNotFound;
+		NSString *file, *fileType, *testType, *fullFile;
 
 		for(i=0; i<fileCount; i++)
 			{
 			file = (NSString *)[allFiles objectAtIndex:i];
-			fileType = [ws typeOfFile:[folder stringByAppendingPathComponent:file] error:NULL];
+			fullFile = [folder stringByAppendingPathComponent:file];
+			fileType = [ws typeOfFile:fullFile error:NULL];
 			
 			for(j=0; j<typeCount; j++)
 				{
@@ -40,10 +56,18 @@
 				if([ws type:fileType conformsToType:testType])
 					{
 					[files addObject:file];
+					if([fullFile isEqualToString:aPath])
+						{
+						currentIndex = [files count]-1;
+						}
 					break;
 					}
 				}
-			
+			}
+
+		if(isFolder && [files count])
+			{
+			currentIndex = 0;
 			}
 		}
 		
@@ -60,9 +84,21 @@
 
 #pragma mark -
 
+- (NSString *)currentFile
+{
+	if(currentIndex==NSNotFound)
+		{
+		return nil;
+		}
+	return [folder stringByAppendingPathComponent:[files objectAtIndex:currentIndex]];
+}
+
 - (NSUInteger)count
 {
 	return [files count];
 }
+
+@synthesize folder=folder;
+@synthesize currentIndex=currentIndex;
 
 @end

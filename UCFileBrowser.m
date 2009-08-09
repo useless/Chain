@@ -33,35 +33,37 @@
 {
     [super windowControllerDidLoadNib:aController];
 //	Toolbar?!
-//	[self setFileURL:[NSURL fileURLWithPath:NSHomeDirectory()]];
 }
 
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
-	BOOL isFolder;
-	NSString * filePath = [absoluteURL path];
+	NSString * path = [absoluteURL path];
 	
-	if(![[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isFolder])
+	fileList = [[UCFileList alloc] initForPath:path withTypes:[self filterTypes]];
+
+	if(fileList==nil)
 		{
 		if(outError!=NULL)
-			{ *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileNoSuchFileError userInfo:nil]; }
+			{
+			*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileNoSuchFileError userInfo:nil];
+			}
 		return NO;
 		}
 
-	if(!isFolder)
+	if([fileList currentFile]==nil)
 		{
-		filePath = [filePath stringByDeletingLastPathComponent];
-		}
-
-	fileList = [[UCFileList alloc] initForFolder:filePath withTypes:[self filterTypes]];
-	NSLog(@"Browse: %@ (%d).", filePath, [fileList count]);
-	// aktuellen Index bestimmen
-	if(isFolder)
-		{
-		
+		if(outError!=NULL)
+			{
+			*outError = [NSError errorWithDomain:@"UCChainErrors" code:42 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+				NSLocalizedString(@"The folder contains no files of a suitable kind.", @"Unable to open folder reason"), NSLocalizedFailureReasonErrorKey,
+				NSLocalizedString(@"Try opening a file of a suitable kind.", @"Unable to open folder suggestion"), NSLocalizedRecoverySuggestionErrorKey,
+			nil]];
+			}
+		return NO;
 		}
 	else
 		{
+		[self setFileURL:[NSURL fileURLWithPath:[fileList currentFile]]];
 		}
 
 	return YES;
