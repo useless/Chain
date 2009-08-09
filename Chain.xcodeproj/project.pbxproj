@@ -300,6 +300,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Chain;
+				PRODUCT_VERSION = 0.2b;
 			};
 			name = Debug;
 		};
@@ -314,6 +315,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Chain;
+				PRODUCT_VERSION = 0.2b;
 			};
 			name = Release;
 		};

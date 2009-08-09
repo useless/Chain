@@ -2,8 +2,8 @@
 //  UCTableView.h
 //  Chain
 //
-//  Created by Robert on 13.06.09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Created by Christoph on 13.06.09.
+//  Copyright Useless Coding 2009. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

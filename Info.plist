@@ -7,6 +7,13 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>png</string>
+				<string>jpg</string>
+				<string>jpeg</string>
+				<string>gif</string>
+			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>ChainFile</string>
 			<key>CFBundleTypeRole</key>
@@ -36,6 +43,7 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>jpg</string>
+				<string>jpeg</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>ChainFile</string>
@@ -72,11 +80,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1 (pre-release)</string>
+	<string>${PRODUCT_VERSION}</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>5</string>
+	<string>6</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
