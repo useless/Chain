@@ -55,7 +55,16 @@
 
 - (void)currentFileDidChange
 {
-	[pictureView setImage:[[[NSImage alloc] initWithContentsOfURL:[self fileURL]] autorelease]];
+	NSImage * image = [[NSImage alloc]  initWithContentsOfURL:[self fileURL]];
+	if(image && [[image representations] count])
+	{
+		NSImageRep * rep = [[image representations] objectAtIndex:0];
+		NSSize size = NSMakeSize([rep pixelsWide],[rep pixelsHigh]);
+		
+		[image setScalesWhenResized:YES];
+		[image setSize:size];
+	}
+	[pictureView setImage:[image autorelease]];
 }
 
 #pragma mark Actions
