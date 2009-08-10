@@ -1,5 +1,5 @@
 //
-//  MyDocument.h
+//  UCFileBrowser.h
 //  Chain
 //
 //  Created by Christoph on 11.06.09.

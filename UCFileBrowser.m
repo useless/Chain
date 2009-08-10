@@ -1,5 +1,5 @@
 //
-//  MyDocument.m
+//  UCFileBrowser.m
 //  Chain
 //
 //  Created by Christoph on 11.06.09.
@@ -58,7 +58,7 @@
 			{
 			*outError = [NSError errorWithDomain:@"UCChainErrors" code:42 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
 				NSLocalizedString(@"The folder contains no files of a suitable kind.", @"Unable to open folder reason"), NSLocalizedFailureReasonErrorKey,
-				NSLocalizedString(@"Try opening a file of a suitable kind.", @"Unable to open folder suggestion"), NSLocalizedRecoverySuggestionErrorKey,
+				NSLocalizedString(@"Try opening a file by choosing the Open command from the File menu.", @"Unable to open folder suggestion"), NSLocalizedRecoverySuggestionErrorKey,
 			nil]];
 			}
 		return NO;
