@@ -17,5 +17,6 @@
 
 - (IBAction)invertImage:(id)sender;
 - (IBAction)toggleAnimation:(id)sender;
+- (IBAction)toggleSizeToFit:(id)sender;
 
 @end
