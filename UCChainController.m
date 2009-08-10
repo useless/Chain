@@ -16,24 +16,6 @@ NSString *const UCDefaultsChangedNotification = @"UCDefaultsChanged";
 
 @synthesize inspector;
 
-+ (NSOpenPanel *)folderChooserWithPrompt:(NSString *)prompt allowingMultiple:(BOOL)multiple;
-{
-	NSOpenPanel * op = [NSOpenPanel openPanel];
-	[op setCanChooseFiles:NO];
-	[op setCanChooseDirectories:YES];
-	[op setAllowsMultipleSelection:multiple];
-	[op setPrompt:prompt];
-	
-	return op;
-}
-
-+ (NSOpenPanel *)folderChooserWithPrompt:(NSString *)prompt
-{
-	return [self folderChooserWithPrompt:prompt allowingMultiple:NO];
-}
-
-#pragma mark -
-
 - (id)init
 {
     if (self=[super init])

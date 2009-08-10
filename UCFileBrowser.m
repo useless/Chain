@@ -7,7 +7,7 @@
 //
 
 #import "UCFileBrowser.h"
-#import "UCChainController.h"
+#import "UCPreferencesController.h"
 
 
 @implementation UCFileBrowser
@@ -16,6 +16,7 @@
 {
     if(self=[super init])
 		{
+		folderOperations = nil;
 		}
 
     return self;
@@ -23,6 +24,7 @@
 
 - (void)dealloc
 {
+	[folderOperations release];
 	[fileList release];
 	[super dealloc];
 }
@@ -86,20 +88,70 @@
 {
 }
 
-- (NSString *)fileNameWithNameRange:(NSRange *)outRange
+- (UCFolderOperations *)folderOperations
 {
-	return [self fileNameFromURL:[self fileURL] withNameRange:outRange];
-}
-
-- (NSString *)fileNameFromURL:(NSURL *)fileURL withNameRange:(NSRange *)outRange
-{
-	NSString * fileName = [[fileURL path] lastPathComponent];
-	if(outRange!=NULL)
+	if(folderOperations==nil)
 		{
-		*outRange = NSMakeRange(0, [[fileName stringByDeletingPathExtension] length]);
+		folderOperations = [[UCFolderOperations alloc] init];
 		}
 
-	return fileName;
+	return folderOperations;
+}
+
+#pragma mark File Operations
+
+- (void)copy:(BOOL)copying confirmedFileTo:(NSString *)aFolder withName:(NSString *)newName
+{
+	if(newName==nil)
+		{
+		newName = [[[self fileURL] path] lastPathComponent];
+		}
+
+	NSString * suggestedName;
+	if([UCFolderOperations canHaveFileNamed:newName inFolder:aFolder suggestedName:&suggestedName])
+		{
+		if(copying)
+			{
+			[self copyFileTo:aFolder withName:newName];
+			}
+		else
+			{
+			[self moveFileTo:aFolder withName:newName];
+			}
+		}
+	else
+		{
+		NSAlert * alert = [[self folderOperations] conflictSheetForName:newName inFolder:aFolder withSuggestion:suggestedName];
+		[alert beginSheetModalForWindow:[self windowForSheet] modalDelegate:self didEndSelector:@selector(conflictDidEnd:returnCode:contextInfo:) contextInfo:[[NSDictionary alloc] initWithObjectsAndKeys:
+			newName, @"UCConflictName",
+			aFolder, @"UCTargetFolder",
+			copying?@"YES":@"NO", @"UCCopying",
+		nil]];
+		[[self folderOperations] activateSheet:alert];
+		}
+}
+
+- (void)moveConfirmedFileTo:(NSString *)aFolder withName:(NSString *)newName
+{
+	[self copy:NO confirmedFileTo:aFolder withName:newName];
+}
+
+- (void)copyConfirmedFileTo:(NSString *)aFolder withName:(NSString *)newName
+{
+	[self copy:YES confirmedFileTo:aFolder withName:newName];
+}
+
+- (void)moveFileTo:(NSString *)aFolder withName:(NSString *)newName
+{
+	// TODO: perform actual file operations
+	// delegate to UCFolderOperations
+	// handle Errors here
+	NSLog(@"%@ -=> %@ (%@).", [self fileURL], newName, aFolder);
+}
+
+- (void)copyFileTo:(NSString *)aFolder withName:(NSString *)newName
+{
+	NSLog(@"%@ +=> %@ (%@).", [self fileURL], newName, aFolder);
 }
 
 #pragma mark Actions
@@ -156,8 +208,12 @@
 {
 	if([sender tag]==0)
 		{
-		NSOpenPanel * op = [UCChainController folderChooserWithPrompt:NSLocalizedString(@"Move", @"Panel prompt for other Move target")];
-		[op beginSheetForDirectory:nil file:nil modalForWindow:[self windowForSheet] modalDelegate:self didEndSelector:@selector(chooseDidEnd:returnCode:contextInfo:) contextInfo:nil];
+		NSOpenPanel * op = [UCFolderOperations folderChooserWithPrompt:NSLocalizedString(@"Move", @"Panel prompt for other Move target")];
+		[op beginSheetForDirectory:nil file:nil modalForWindow:[self windowForSheet] modalDelegate:self didEndSelector:@selector(chooseDidEnd:returnCode:copying:) contextInfo:NO];
+		}
+	else
+		{
+		[self moveConfirmedFileTo:[UCPreferencesController folderPathForIndex:[sender tag]-1] withName:nil];
 		}
 }
 
@@ -165,16 +221,19 @@
 {
 	if([sender tag]==0)
 		{
-		NSOpenPanel * op = [UCChainController folderChooserWithPrompt:NSLocalizedString(@"Copy", @"Panel prompt for other Copy target")];
-		[op beginSheetForDirectory:nil file:nil modalForWindow:[self windowForSheet] modalDelegate:self didEndSelector:@selector(chooseDidEnd:returnCode:contextInfo:) contextInfo:nil];
+		NSOpenPanel * op = [UCFolderOperations folderChooserWithPrompt:NSLocalizedString(@"Copy", @"Panel prompt for other Copy target")];
+		[op beginSheetForDirectory:nil file:nil modalForWindow:[self windowForSheet] modalDelegate:self didEndSelector:@selector(chooseDidEnd:returnCode:copying:) contextInfo:YES];
 		}
+	else
+		{
+		[self copyConfirmedFileTo:[UCPreferencesController folderPathForIndex:[sender tag]-1] withName:nil];
+		}
+
 }
 
 - (IBAction)moveAgain:(id)sender
 {
 }
-
-#pragma mark -
 
 - (IBAction)moveToTrash:(id)sender
 {
@@ -182,75 +241,55 @@
 
 - (IBAction)rename:(id)sender
 {
-	NSAlert * alert = [[NSAlert alloc] init];
-
-	[alert setMessageText:[NSString localizedStringWithFormat:NSLocalizedString(@"Rename \u201c%@\u201d", @"Title of renaming sheet"), [self displayName]]];
-	[alert setInformativeText:NSLocalizedString(@"Type the new name to use for this document.", @"Information for renaming")];
-	[alert addButtonWithTitle:@"Rename"];
-	[alert addButtonWithTitle:@"Cancel"];
-	[alert setAccessoryView:renameView];
-	NSRange nameRange;
-	
-	[renameField setStringValue:[self fileNameWithNameRange:&nameRange]];
-
+	NSAlert * alert = [[self folderOperations] renameSheetForFileURL:[self fileURL] withDisplayName:[self displayName]];
 	[alert beginSheetModalForWindow:[self windowForSheet] modalDelegate:self didEndSelector:@selector(renameDidEnd:returnCode:contextInfo:) contextInfo:nil];
-	[[alert window] makeFirstResponder:renameField];
-	[[renameField currentEditor] setSelectedRange:nameRange];
+	[[self folderOperations] activateSheet:alert];
 }
 
-- (void)replace:(id)sender
-{
-	NSAlert * alert = [[NSAlert alloc] init];
+#pragma mark Sheet Handling
 
-	[alert setMessageText:@"Conflict!"];
-	[alert setInformativeText:@"Type the new name for “...” or replace."];
-	[alert addButtonWithTitle:@"Use New Name"];
-	[alert addButtonWithTitle:@"Cancel"];
-	[alert addButtonWithTitle:@"Replace"];
-	[[[alert buttons] objectAtIndex:2] setKeyEquivalent:@"r"];
-	[[[alert buttons] objectAtIndex:2] setKeyEquivalentModifierMask:NSCommandKeyMask];
-	[alert setAlertStyle:NSCriticalAlertStyle];
-	[alert setAccessoryView:renameView];
-//	[alert setAlertStyle:NSAl
-	[renameField setStringValue:[self displayName]];
-
-	[alert beginSheetModalForWindow:[self windowForSheet] modalDelegate:self didEndSelector:@selector(renameDidEnd:returnCode:contextInfo:) contextInfo:nil];
-	[[alert window] makeFirstResponder:renameField];
-	[[renameField currentEditor] setSelectedRange:NSMakeRange(0, 3)];
-}
-
-#pragma mark -
-
-- (void)renameDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void)renameDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
 	[[alert window] orderOut:self];
-	[alert release];
-	
-	// Context-Info sollte Verschiebe/Kopierinformationen enthalten
-	
-	if(returnCode==NSAlertFirstButtonReturn) // (Verschieben) und Umbenennen
+
+	if(returnCode==NSAlertFirstButtonReturn) // Rename
 		{
-		NSLog(@"Umbennen in „%@“", [renameField stringValue]);
-		[self replace:self];
-		}
-	else if(returnCode==NSAlertThirdButtonReturn) // Verschieben und Ersetzen
-		{
-		NSLog(@"Ersetzen.");
-		}
-	else
-		{
-		NSLog(@"NICHT Umbennen.");
+		[self moveConfirmedFileTo:fileList.folder withName:[[self folderOperations] sheetNameValue]];
 		}
 }
 
-- (void)chooseDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void  *)contextInfo
+- (void)conflictDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(NSDictionary *)contextInfo
+{
+	[[alert window] orderOut:self];
+	NSString * targetFolder = [[[contextInfo objectForKey:@"UCTargetFolder"] retain] autorelease];
+	NSString * conflictName = [[[contextInfo objectForKey:@"UCConflictName"] retain] autorelease];
+	BOOL copying = [[contextInfo objectForKey:@"UCCopying"] boolValue];
+	[contextInfo release];
+	
+	if(returnCode==NSAlertFirstButtonReturn) // Copy/Move with new Name
+		{
+		[self copy:copying confirmedFileTo:targetFolder withName:[[self folderOperations] sheetNameValue]];
+		}
+	else if(returnCode==NSAlertThirdButtonReturn) // Copy/Move Replacing
+		{
+		if(copying)
+			{
+			[self copyFileTo:targetFolder withName:conflictName];
+			}
+		else
+			{
+			[self moveFileTo:targetFolder withName:conflictName];
+			}
+		}
+}
+
+- (void)chooseDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode copying:(BOOL)copying
 {
 	[panel orderOut:self];
+
 	if(returnCode==NSOKButton)
 		{
-		NSLog(@"Move/Copy there: %@.", [[panel filenames] objectAtIndex:0]);
-	
-		[self replace:self];
+		[self copy:copying confirmedFileTo:[[panel filenames] objectAtIndex:0] withName:nil];
 		}
 }
 

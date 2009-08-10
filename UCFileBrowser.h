@@ -9,21 +9,27 @@
 
 #import <Cocoa/Cocoa.h>
 #import "UCFileList.h"
+#import "UCFolderOperations.h"
+
 
 @interface UCFileBrowser : NSDocument
 {
-	IBOutlet NSView * renameView;
-	IBOutlet NSTextField * renameField;
+	UCFolderOperations * folderOperations;
 	UCFileList * fileList;
 }
 
 - (void)setCurrentFile:(NSString *)filePath;
 - (void)currentFileDidChange;
 
-- (NSString *)fileNameWithNameRange:(NSRange *)outRange;
-- (NSString *)fileNameFromURL:(NSURL *)fileURL withNameRange:(NSRange *)outRange;
-
 - (NSArray *)filterTypes;
+
+- (UCFolderOperations *)folderOperations;
+- (void)copy:(BOOL)copying confirmedFileTo:(NSString *)aFolder withName:(NSString *)newName;
+- (void)moveConfirmedFileTo:(NSString *)aFolder withName:(NSString *)newName;
+- (void)copyConfirmedFileTo:(NSString *)aFolder withName:(NSString *)newName;
+
+- (void)moveFileTo:(NSString *)aFolder withName:(NSString *)newName;
+- (void)copyFileTo:(NSString *)aFolder withName:(NSString *)newName;
 
 - (IBAction)gotoFirst:(id)sender;
 - (IBAction)gotoPrevious:(id)sender;
@@ -34,13 +40,11 @@
 - (IBAction)moveTo:(id)sender;
 - (IBAction)copyTo:(id)sender;
 - (IBAction)moveAgain:(id)sender;
-
 - (IBAction)moveToTrash:(id)sender;
 - (IBAction)rename:(id)sender;
 
 - (void)renameDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo;
-- (void)chooseDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void  *)contextInfo;
-
-- (void)replace:(id)sender;
+- (void)conflictDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(NSDictionary *)contextInfo;
+- (void)chooseDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode copying:(BOOL)copying;
 
 @end

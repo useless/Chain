@@ -19,13 +19,10 @@ extern NSString *const UCDefaultsChangedNotification;
 	IBOutlet NSMenu * copyMenu;
 	UCInspector * inspector;
 	UCPreferencesController * prefs;
-	
-@private
-	
-}
 
-+ (NSOpenPanel *)folderChooserWithPrompt:(NSString *)prompt allowingMultiple:(BOOL)multiple;
-+ (NSOpenPanel *)folderChooserWithPrompt:(NSString *)prompt;
+@private
+
+}
 
 - (void)defaultsDidChange:(id)notification;
 - (void)rebuildFolderMenus;

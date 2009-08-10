@@ -21,6 +21,8 @@ extern NSString *const UCPBTypeFolderIndexSets;
 	NSMutableArray * folders;
 }
 
++ (NSString *)folderPathForIndex:(NSUInteger)index;
+
 - (void)show;
 - (void)updateUserDefaults;
 

@@ -8,11 +8,20 @@
 
 #import "UCPreferencesController.h"
 #import "UCChainController.h"
+#import "UCFolderOperations.h"
 
 
-NSString *const UCPBTypeFolderIndexSets = @"com.useless.chain.folder.indexset";
+NSString *const UCPBTypeFolderIndexSets = @"de.sigma-server.useless.chain.folder.indexset";
 
 @implementation UCPreferencesController
+
++ (NSString *)folderPathForIndex:(NSUInteger)index
+{
+	NSArray * theFolders = [[NSUserDefaults standardUserDefaults] objectForKey:UCDefaultsFoldersKey];
+	return [theFolders objectAtIndex:index];
+}
+
+#pragma mark -
 
 - (id) init
 {
@@ -60,7 +69,7 @@ NSString *const UCPBTypeFolderIndexSets = @"com.useless.chain.folder.indexset";
 
 - (IBAction)addFolder:(id)sender
 {
-	NSOpenPanel * op = [UCChainController folderChooserWithPrompt:NSLocalizedString(@"Add", @"Panel Prompt for new target folder") allowingMultiple:YES];
+	NSOpenPanel * op = [UCFolderOperations folderChooserWithPrompt:NSLocalizedString(@"Add", @"Panel Prompt for new target folder") allowingMultiple:YES];
 	[op beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(chooseDidEnd:returnCode:contextInfo:) contextInfo:nil];
 }
 
