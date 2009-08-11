@@ -11,6 +11,21 @@
 
 @implementation UCTableView
 
+- (void)keyDown:(NSEvent *)theEvent
+{
+	if([[theEvent charactersIgnoringModifiers] length])
+		{
+		unichar key = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
+
+		if(key==NSDeleteFunctionKey || key==NSDeleteCharacter || key==NSDeleteCharFunctionKey)
+			{
+			[self doCommandBySelector:@selector(delete:)];
+			return;
+			}
+		}
+	[super keyDown:theEvent];
+}
+
 - (IBAction)delete:(id)sender
 {
 	id ds = [self dataSource];
