@@ -88,6 +88,10 @@ NSString *const UCPBTypeFolderIndexSets = @"de.sigma-server.useless.chain.folder
 		[icon setSize:NSMakeSize(16, 16)];
 		return icon;
 		}
+	else if([[aTableColumn identifier] isEqualToString:@"UCIndex"])
+		{
+		return [NSString stringWithFormat:@"%d", rowIndex+1];
+		}
 	
 	return [[NSFileManager defaultManager] displayNameAtPath:[folders objectAtIndex:rowIndex]];
 }
