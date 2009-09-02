@@ -222,7 +222,7 @@
 	if([sender tag]==0)
 		{
 		NSOpenPanel * op = [UCFolderOperations folderChooserWithPrompt:NSLocalizedString(@"Copy", @"Panel prompt for other Copy target")];
-		[op beginSheetForDirectory:nil file:nil modalForWindow:[self windowForSheet] modalDelegate:self didEndSelector:@selector(chooseDidEnd:returnCode:copying:) contextInfo:YES];
+		[op beginSheetForDirectory:nil file:nil modalForWindow:[self windowForSheet] modalDelegate:self didEndSelector:@selector(chooseDidEnd:returnCode:copying:) contextInfo:(void *)YES];
 		}
 	else
 		{

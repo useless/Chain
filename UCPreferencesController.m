@@ -108,7 +108,14 @@ NSString *const UCPBTypeFolderIndexSets = @"de.sigma-server.useless.chain.folder
 		}
 	else if([[aTableColumn identifier] isEqualToString:@"UCIndex"])
 		{
-		return [NSString stringWithFormat:@"%d", rowIndex+1];
+		if(rowIndex<9)
+			{
+			return [NSString stringWithFormat:@"\u2318%d", rowIndex+1];
+			}
+		else
+			{
+			return nil;
+			}
 		}
 	
 	return [[NSFileManager defaultManager] displayNameAtPath:[folders objectAtIndex:rowIndex]];
