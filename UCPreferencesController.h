@@ -16,20 +16,28 @@ extern NSString *const UCPBTypeFolderIndexSets;
 	IBOutlet NSTableView * foldersTable;
 	IBOutlet NSButton * addButton;
 	IBOutlet NSButton * removeButton;
-	IBOutlet NSTabView * panes;
+	IBOutlet NSView * prefGeneral;
+	IBOutlet NSView * prefFolders;
 
 @private
 	NSMutableArray * folders;
+	NSString * activePane;
 }
 
 + (NSString *)folderPathForIndex:(NSUInteger)index;
 
 - (void)show;
+- (void)showAndCenter:(BOOL)centering;
 - (void)showFolders;
 - (void)updateUserDefaults;
 
 - (IBAction)addFolder:(id)sender;
 - (IBAction)switchPane:(id)sender;
+
+- (void)setPane:(NSView *)pane;
+- (void)setPaneWithIdentifier:(NSString *)identifier;
+- (NSView *)paneForIdentifier:(NSString *)identifier;
+- (NSRect)frameForPane:(NSView *)pane;
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView;
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex;

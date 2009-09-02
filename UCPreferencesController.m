@@ -35,6 +35,7 @@ NSString *const UCPBTypeFolderIndexSets = @"de.sigma-server.useless.chain.folder
 
 - (void)dealloc
 {
+	[activePane release];
 	[folders release];
 	[super dealloc];
 }
@@ -52,24 +53,38 @@ NSString *const UCPBTypeFolderIndexSets = @"de.sigma-server.useless.chain.folder
 	[toolbar setSelectedItemIdentifier:@"UCGeneralItem"];
 	[window setToolbar:toolbar];
 	[toolbar release];
+
+	activePane = [@"UCGeneralItem" retain];
+	[window setContentSize:[[self paneForIdentifier:activePane] frame].size];
+	[[window contentView] addSubview:[self paneForIdentifier:activePane]];
+	[[window contentView] setWantsLayer:YES];
+	[window center];
 }
 
 - (void)show
+{
+	[self showAndCenter:YES];
+}
+
+- (void)showAndCenter:(BOOL)centering
 {
 	if(window==nil)
 		{ [NSBundle loadNibNamed:@"Preferences" owner:self]; }
 
 	[self validateButton];
 
-	[window center];
+	if(centering)
+		{
+		[window center];
+		}
 	[window makeKeyAndOrderFront:self];
 }
 
 - (void)showFolders
 {
-	[self show];
+	[self showAndCenter:NO];
 	[[window toolbar] setSelectedItemIdentifier:@"UCFolderItem"];
-	[panes selectTabViewItemWithIdentifier:@"UCFolderItem"];
+	[self setPaneWithIdentifier:@"UCFolderItem"];
 }
 
 - (void)updateUserDefaults
@@ -88,7 +103,55 @@ NSString *const UCPBTypeFolderIndexSets = @"de.sigma-server.useless.chain.folder
 
 - (IBAction)switchPane:(id)sender
 {
-	[panes selectTabViewItemWithIdentifier:[sender itemIdentifier]];
+	[self setPaneWithIdentifier:[sender itemIdentifier]];
+}
+
+#pragma mark Prefpanes
+
+- (void)setPaneWithIdentifier:(NSString *)identifier
+{
+	[self setPane:[self paneForIdentifier:identifier]];	
+	[activePane release];
+	activePane = [identifier copy];
+}
+
+- (void)setPane:(NSView *)pane
+{
+	NSView * oldPane = [self paneForIdentifier:activePane];
+
+	[NSAnimationContext beginGrouping];
+		[[[window contentView] animator] replaceSubview:oldPane with:pane];
+		[[window animator] setFrame:[self frameForPane:pane] display:YES];
+	[NSAnimationContext endGrouping];
+}
+
+- (NSView *)paneForIdentifier:(NSString *)identifier
+{
+	if([identifier isEqualToString:@"UCGeneralItem"])
+		{
+		return prefGeneral;
+		}
+	else if([identifier isEqualToString:@"UCFolderItem"])
+		{
+		return prefFolders;
+		}
+	else
+		{
+		return nil;
+		}
+}
+
+- (NSRect)frameForPane:(NSView *)pane
+{
+	NSRect theFrame = [window frame];
+	NSSize oldSize = [[window contentView] frame].size;
+	CGFloat oldHeight=theFrame.size.height;
+ 
+	theFrame.size.width = theFrame.size.width-oldSize.width+[pane frame].size.width;
+	theFrame.size.height = theFrame.size.height-oldSize.height+[pane frame].size.height;
+	theFrame.origin.y = theFrame.origin.y+oldHeight - theFrame.size.height;
+
+	return theFrame;
 }
 
 #pragma mark Data Source
