@@ -146,11 +146,14 @@
 	// TODO: perform actual file operations
 	// delegate to UCFolderOperations
 	// handle Errors here
+	[[NSFileManager defaultManager] moveItemAtPath:[[self fileURL] path] toPath:[aFolder stringByAppendingPathComponent:newName] error:NULL];
+	//[self gotoNext:self];
 	NSLog(@"%@ -=> %@ (%@).", [self fileURL], newName, aFolder);
 }
 
 - (void)copyFileTo:(NSString *)aFolder withName:(NSString *)newName
 {
+	[[NSFileManager defaultManager] copyItemAtPath:[[self fileURL] path] toPath:[aFolder stringByAppendingPathComponent:newName] error:NULL];
 	NSLog(@"%@ +=> %@ (%@).", [self fileURL], newName, aFolder);
 }
 
