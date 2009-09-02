@@ -46,6 +46,12 @@ NSString *const UCPBTypeFolderIndexSets = @"de.sigma-server.useless.chain.folder
 	[foldersTable registerForDraggedTypes:[NSArray arrayWithObjects:UCPBTypeFolderIndexSets, NSFilenamesPboardType, nil]];
 	[foldersTable setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
 	[foldersTable setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+
+	NSToolbar * toolbar = [[NSToolbar alloc] initWithIdentifier:@"UCPreferences"];
+	[toolbar setDelegate:self];
+	[toolbar setSelectedItemIdentifier:@"UCGeneralItem"];
+	[window setToolbar:toolbar];
+	[toolbar release];
 }
 
 - (void)show
@@ -71,6 +77,11 @@ NSString *const UCPBTypeFolderIndexSets = @"de.sigma-server.useless.chain.folder
 {
 	NSOpenPanel * op = [UCFolderOperations folderChooserWithPrompt:NSLocalizedString(@"Add", @"Panel Prompt for new target folder") allowingMultiple:YES];
 	[op beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(chooseDidEnd:returnCode:contextInfo:) contextInfo:nil];
+}
+
+- (IBAction)switchPane:(id)sender
+{
+	[panes selectTabViewItemWithIdentifier:[sender itemIdentifier]];
 }
 
 #pragma mark Data Source
@@ -174,6 +185,41 @@ NSString *const UCPBTypeFolderIndexSets = @"de.sigma-server.useless.chain.folder
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
 	[self validateButton];
+}
+
+#pragma mark Toolbar
+
+- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
+{
+	return [NSArray arrayWithObjects:@"UCGeneralItem", @"UCFolderItem", nil];
+}
+
+- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
+{
+	return [self toolbarAllowedItemIdentifiers:toolbar];
+}
+
+- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar
+{
+	return [self toolbarAllowedItemIdentifiers:toolbar];
+}
+
+- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
+{
+	NSToolbarItem * item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
+	if([itemIdentifier isEqualToString:@"UCGeneralItem"])
+		{
+		[item setImage:[NSImage imageNamed:NSImageNamePreferencesGeneral]];
+		[item setLabel:NSLocalizedString(@"General", @"General Toolbar Label")];
+		}
+	else if([itemIdentifier isEqualToString:@"UCFolderItem"])
+		{
+		[item setImage:[NSImage imageNamed:NSImageNameFolderSmart]];
+		[item setLabel:NSLocalizedString(@"Folders", @"Folders Toolbar Label")];
+		}
+	[item setTarget:self];
+	[item setAction:@selector(switchPane:)];
+	return [item autorelease];
 }
 
 #pragma mark Validation

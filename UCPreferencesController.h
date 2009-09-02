@@ -16,6 +16,7 @@ extern NSString *const UCPBTypeFolderIndexSets;
 	IBOutlet NSTableView * foldersTable;
 	IBOutlet NSButton * addButton;
 	IBOutlet NSButton * removeButton;
+	IBOutlet NSTabView * panes;
 
 @private
 	NSMutableArray * folders;
@@ -27,6 +28,7 @@ extern NSString *const UCPBTypeFolderIndexSets;
 - (void)updateUserDefaults;
 
 - (IBAction)addFolder:(id)sender;
+- (IBAction)switchPane:(id)sender;
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView;
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex;
@@ -35,6 +37,11 @@ extern NSString *const UCPBTypeFolderIndexSets;
 - (NSDragOperation)tableView:(NSTableView *)aTableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation;
 - (BOOL)tableView:(NSTableView *)aTableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation;
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification;
+
+- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar;
+- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar;
+- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar;
+- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag;
 
 - (void)validateButton;
 
