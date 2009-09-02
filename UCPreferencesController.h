@@ -25,6 +25,7 @@ extern NSString *const UCPBTypeFolderIndexSets;
 + (NSString *)folderPathForIndex:(NSUInteger)index;
 
 - (void)show;
+- (void)showFolders;
 - (void)updateUserDefaults;
 
 - (IBAction)addFolder:(id)sender;

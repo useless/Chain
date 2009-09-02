@@ -114,7 +114,9 @@ NSString *const UCDefaultsChangedNotification = @"UCDefaultsChanged";
 
 - (IBAction)customizeFolders:(id)sender
 {
-	[self showPreferences:sender];
+	if(prefs==nil)
+		{ prefs = [[UCPreferencesController alloc] init]; }
+	[prefs showFolders];
 }
 
 - (IBAction)showPreferences:(id)sender

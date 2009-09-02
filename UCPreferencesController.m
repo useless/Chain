@@ -65,6 +65,13 @@ NSString *const UCPBTypeFolderIndexSets = @"de.sigma-server.useless.chain.folder
 	[window makeKeyAndOrderFront:self];
 }
 
+- (void)showFolders
+{
+	[self show];
+	[[window toolbar] setSelectedItemIdentifier:@"UCFolderItem"];
+	[panes selectTabViewItemWithIdentifier:@"UCFolderItem"];
+}
+
 - (void)updateUserDefaults
 {
 	[[NSUserDefaults standardUserDefaults] setObject:folders forKey:UCDefaultsFoldersKey];
