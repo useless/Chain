@@ -48,3 +48,11 @@
 
 
 @end
+
+@implementation NSObject (UCTableViewDataSource)
+
+- (void)tableView:(UCTableView *)aTableView deleteRowsWithIndexes:(NSIndexSet *)rowIndexes
+{
+}
+
+@end

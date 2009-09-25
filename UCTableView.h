@@ -17,3 +17,9 @@
 - (IBAction)delete:(id)sender;
 
 @end
+
+@interface NSObject (UCTableViewDataSource)
+
+- (void)tableView:(UCTableView *)aTableView deleteRowsWithIndexes:(NSIndexSet *)rowIndexes;
+
+@end
