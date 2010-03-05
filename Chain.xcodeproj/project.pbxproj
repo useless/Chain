@@ -6,6 +6,23 @@
 	objectVersion = 45;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		BFF7D4BA11417C480020F712 /* Disk Image */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = BFF7D4BF11417C7B0020F712 /* Build configuration list for PBXAggregateTarget "Disk Image" */;
+			buildPhases = (
+				BFF7D4D211417CF80020F712 /* CopyFiles */,
+				BF1A5DD71141848F00F4875B /* Copy Helper Files */,
+				BFF7D4B911417C480020F712 /* Make DMG */,
+			);
+			dependencies = (
+				BFF7D4BE11417C5D0020F712 /* PBXTargetDependency */,
+			);
+			name = "Disk Image";
+			productName = "Disk Image";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		1DDD582C0DA1D0D100B32029 /* ImageBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58280DA1D0D100B32029 /* ImageBrowser.xib */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
@@ -13,6 +30,7 @@
 		8D15AC310486D014006FF6A4 /* UCImageBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4ACFDCFA73011CA2CEA /* UCImageBrowser.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		BF1A5DD9114184A200F4875B /* background.png in Copy Helper Files */ = {isa = PBXBuildFile; fileRef = BF1A5DD81141849A00F4875B /* background.png */; };
 		BF313FF40FE138020052C2AF /* UCChainController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF313FF30FE138020052C2AF /* UCChainController.m */; };
 		BF313FFB0FE138C30052C2AF /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF313FFA0FE138C30052C2AF /* Preferences.xib */; };
 		BF3140000FE138EE0052C2AF /* UCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF313FFF0FE138EE0052C2AF /* UCPreferencesController.m */; };
@@ -24,13 +42,49 @@
 		BFD3E5350FE19FF000D3E561 /* Chain.icns in Resources */ = {isa = PBXBuildFile; fileRef = BFD3E5340FE19FF000D3E561 /* Chain.icns */; };
 		BFD3E5D40FE1BD5700D3E561 /* UCFileBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD3E5D30FE1BD5700D3E561 /* UCFileBrowser.m */; };
 		BFD3E6000FE1C0C200D3E561 /* UCFileList.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD3E5FF0FE1C0C200D3E561 /* UCFileList.m */; };
+		BFF7D4D311417D450020F712 /* Chain.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8D15AC370486D014006FF6A4 /* Chain.app */; };
+		BFF7D4D411417D4E0020F712 /* Readme.pdf in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFF7D4CD11417C9D0020F712 /* Readme.pdf */; };
 		D00AA0AE0FE312CF0002685B /* UCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D00AA0AD0FE312CF0002685B /* UCTableView.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BFF7D4BD11417C5D0020F712 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D15AC270486D014006FF6A4;
+			remoteInfo = Chain;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BF1A5DD71141848F00F4875B /* Copy Helper Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = $DERIVED_FILES_DIR/dmg/.helper;
+			dstSubfolderSpec = 0;
+			files = (
+				BF1A5DD9114184A200F4875B /* background.png in Copy Helper Files */,
+			);
+			name = "Copy Helper Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFF7D4D211417CF80020F712 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = $DERIVED_FILES_DIR/dmg;
+			dstSubfolderSpec = 0;
+			files = (
+				BFF7D4D311417D450020F712 /* Chain.app in CopyFiles */,
+				BFF7D4D411417D4E0020F712 /* Readme.pdf in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58290DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ImageBrowser.xib; sourceTree = "<group>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2A37F4ACFDCFA73011CA2CEA /* UCImageBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCImageBrowser.m; sourceTree = "<group>"; };
@@ -41,6 +95,7 @@
 		32DBCF750370BD2300C91783 /* Chain_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chain_Prefix.pch; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Chain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chain.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF1A5DD81141849A00F4875B /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = Product/UC/background.png; sourceTree = "<group>"; };
 		BF313FF20FE138020052C2AF /* UCChainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCChainController.h; sourceTree = "<group>"; };
 		BF313FF30FE138020052C2AF /* UCChainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCChainController.m; sourceTree = "<group>"; };
 		BF313FF70FE138B10052C2AF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Preferences.xib; sourceTree = "<group>"; };
@@ -58,6 +113,7 @@
 		BFD3E5D30FE1BD5700D3E561 /* UCFileBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCFileBrowser.m; sourceTree = "<group>"; };
 		BFD3E5FE0FE1C0C200D3E561 /* UCFileList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCFileList.h; sourceTree = "<group>"; };
 		BFD3E5FF0FE1C0C200D3E561 /* UCFileList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCFileList.m; sourceTree = "<group>"; };
+		BFF7D4CD11417C9D0020F712 /* Readme.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Readme.pdf; path = Product/Readme.pdf; sourceTree = "<group>"; };
 		D00AA0AC0FE312CF0002685B /* UCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCTableView.h; sourceTree = "<group>"; };
 		D00AA0AD0FE312CF0002685B /* UCTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCTableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,7 +142,6 @@
 			isa = PBXGroup;
 			children = (
 				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
-				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
 				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
@@ -146,6 +201,8 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BF1A5DD81141849A00F4875B /* background.png */,
+				BFF7D4CD11417C9D0020F712 /* Readme.pdf */,
 				BFD3E5340FE19FF000D3E561 /* Chain.icns */,
 				BFD3E52C0FE19F9400D3E561 /* ChainFile.icns */,
 				BF313FFA0FE138C30052C2AF /* Preferences.xib */,
@@ -214,6 +271,7 @@
 			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* Chain */,
+				BFF7D4BA11417C480020F712 /* Disk Image */,
 			);
 		};
 /* End PBXProject section */
@@ -236,6 +294,24 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		BFF7D4B911417C480020F712 /* Make DMG */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Make DMG";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -f $PROJECT_DIR/Product/UC/DMG.sh ]; then\n/bin/sh -c $PROJECT_DIR/Product/UC/DMG.sh\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8D15AC300486D014006FF6A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -254,6 +330,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BFF7D4BE11417C5D0020F712 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D15AC270486D014006FF6A4 /* Chain */;
+			targetProxy = BFF7D4BD11417C5D0020F712 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165FFE840EACC02AAC07 /* InfoPlist.strings */ = {
@@ -307,6 +391,31 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		BFF7D4BB11417C480020F712 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /Applications;
+				README = Readme.pdf;
+				TARGET_NAME = Applications;
+			};
+			name = Debug;
+		};
+		BFF7D4BC11417C480020F712 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				INSTALL_PATH = /Applications;
+				README = Readme.pdf;
+				TARGET_NAME = Applications;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C05733C808A9546B00998B17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -321,8 +430,7 @@
 				GCC_PREFIX_HEADER = Chain_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = Chain;
-				PRODUCT_VERSION = 0.2b;
+				PRODUCT_VERSION = "1.0β";
 			};
 			name = Debug;
 		};
@@ -337,8 +445,7 @@
 				GCC_PREFIX_HEADER = Chain_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = Chain;
-				PRODUCT_VERSION = 0.2b;
+				PRODUCT_VERSION = "1.0β";
 			};
 			name = Release;
 		};
@@ -352,7 +459,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
+				PRODUCT_NAME = Chain;
 				SDKROOT = macosx10.5;
+				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
@@ -364,13 +473,24 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
+				PRODUCT_NAME = Chain;
 				SDKROOT = macosx10.5;
+				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		BFF7D4BF11417C7B0020F712 /* Build configuration list for PBXAggregateTarget "Disk Image" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFF7D4BB11417C480020F712 /* Debug */,
+				BFF7D4BC11417C480020F712 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Chain" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
