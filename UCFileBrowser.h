@@ -21,6 +21,9 @@
 - (void)setCurrentFile:(NSString *)filePath;
 - (void)currentFileDidChange;
 
+- (NSUInteger)fileCount;
+- (NSInteger)currentFileIndex;
+
 - (NSArray *)filterTypes;
 
 - (UCFolderOperations *)folderOperations;

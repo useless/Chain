@@ -34,6 +34,8 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController
 {
     [super windowControllerDidLoadNib:aController];
+	[self currentFileDidChange];
+	NSLog(@"Did load Nib");
 //	Toolbar?!
 }
 
@@ -81,6 +83,7 @@
 - (void)setCurrentFile:(NSString *)filePath
 {
 	[self setFileURL:[NSURL fileURLWithPath:filePath]];
+	[[self windowControllers] makeObjectsPerformSelector:@selector(synchronizeWindowTitleWithDocumentName)];
 	[self currentFileDidChange];
 }
 
@@ -96,6 +99,16 @@
 		}
 
 	return folderOperations;
+}
+
+- (NSUInteger)fileCount
+{
+	return fileList.count;
+}
+
+- (NSInteger)currentFileIndex
+{
+	return fileList.currentIndex;
 }
 
 #pragma mark File Operations
@@ -143,7 +156,6 @@
 
 - (void)moveFileTo:(NSString *)aFolder withName:(NSString *)newName
 {
-	// TODO: perform actual file operations
 	// delegate to UCFolderOperations
 	// handle Errors here
 	[[NSFileManager defaultManager] moveItemAtPath:[[self fileURL] path] toPath:[aFolder stringByAppendingPathComponent:newName] error:NULL];

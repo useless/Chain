@@ -8,8 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+//TODO: Make static
 extern NSString *const UCPBTypeFolderIndexSets;
 
+//FIXME: Should be WindowController
 @interface UCPreferencesController : NSObject
 {
 	IBOutlet NSWindow * window;
