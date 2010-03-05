@@ -2,8 +2,8 @@
 //  UCFileBrowser.m
 //  Chain
 //
-//  Created by Christoph on 11.06.09.
-//  Copyright Useless Coding 2009. All rights reserved.
+//  Created by Christoph on 11.06.2009.
+//  Copyright 2009-2010 Useless Coding. All rights reserved.
 //
 
 #import "UCFileBrowser.h"

@@ -2,8 +2,8 @@
 //  UCFolderOperations.m
 //  Chain
 //
-//  Created by Christoph on 10.08.09.
-//  Copyright Useless Coding 2009. All rights reserved.
+//  Created by Christoph on 10.08.2009.
+//  Copyright 2009 Useless Coding. All rights reserved.
 //
 
 #import "UCFolderOperations.h"

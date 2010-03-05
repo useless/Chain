@@ -2,8 +2,8 @@
 //  UCTableView.m
 //  Chain
 //
-//  Created by Christoph on 13.06.09.
-//  Copyright Useless Coding 2009. All rights reserved.
+//  Created by Christoph on 13.06.2009.
+//  Copyright 2009 Useless Coding. All rights reserved.
 //
 
 #import "UCTableView.h"
